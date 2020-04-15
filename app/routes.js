@@ -23,21 +23,71 @@ module.exports = function (app, passport, db) {
   })
 
   app.get('/job-listings', function (req, res) {
-    // db.collection('Listings').find().toArray((err, result) => {  //Find all posts then turn to array
+    db.collection('Listings').find().toArray((err, result) => {  //Find all posts then turn to array
     //   if (err) return console.log(err)
-      res.render('job-listings.ejs',
-      {items: [{
-          title: "Masks",
-          city: "Boston",
-          quantity: "300",
-        }]}
-      // {
-      //   itemTitle: req.body.ItemTitle,
-      //   itemlocation: req.body.ItemLocation,
-      //   Listings: result
-      // }
-    )
-    // })
+    console.log(result)
+      res.render('job-listings.ejs',{
+        Listings: result
+      })
+    })
+  })
+
+  // app.get('/searchItems', function (req, res) {
+  //   db.collection('Listings').find().toArray((err, result) => {  //Find all posts then turn to array
+  //   //   if (err) return console.log(err)
+  //   console.log(result)
+  //     res.render('job-listings.ejs',{
+  //       Listings: result
+  //     })
+  //   })
+  // })
+
+
+// app.get("job-listings", function (req, res, next){
+//   db.collection('Listings').find().toArray((err, result) => {
+// })
+  app.get('/searchItems', function (req, res) {
+    // var q = req.body.q
+    // var q = "Masks"
+	  var q = req.query.q;
+    console.log(req.query)
+      db.collection('Listings').find({
+        itemTitle: q
+      }).toArray((err, result) => {
+        res.render('searchItems.ejs',{
+            Listings: result
+        })
+    })
+	// FULL TEXT SEARCH USING $text
+
+	// db.collection('Listings').find({
+	// 	$itemTitle: q
+  //
+	// }, {
+	// 	_id: 0,
+	// 	__v: 0
+	// }, function (err, data) {
+	// 	res.json(data);
+
+	// });
+
+	// PARTIAL TEXT SEARCH USING REGEX
+
+	// db.collection('Listings').find({
+	// 	Listings: {
+	// 		$regex: new RegExp(q)
+	// 	}
+	// }, {
+	// 	_id: 0,
+	// 	__v: 0
+	// }, function (err, data) {
+	// 	res.json(data);
+  //   res.render('searchItems.ejs');
+	// }).limit(20);
+
+});
+// res.render('/');
+
 
   //   res.render('job-listings.ejs', {items: [{
   //     title: "Masks",
@@ -50,7 +100,7 @@ module.exports = function (app, passport, db) {
   //   }]
   // })
 
-      })
+
     // })
   // })
   // // FEED PAGE =========================
@@ -63,6 +113,7 @@ module.exports = function (app, passport, db) {
   //       })
   //     })
   // });
+
 
   app.get('/job-single', function (req, res) {
     res.render('job-single.ejs');

@@ -1,48 +1,65 @@
 
-var postItemButton = document.getElementById("postItemButton");
-var searchItemButton = document.getElementById("searchItemButton")
+// var postItemButton = document.getElementById("postItemButton");
+// var searchItemForm = document.getElementsByClassName("search-jobs-form")[0]
+// var searchItemButton = document.getElementById("searchItemButton")
 
-
-postItemButton.addEventListener("click", function(){
-  alert("Your information has been submitted!")
-  // console.log("sending from the post item button to the database")
-  const email = document.getElementById("email").value
-  const itemTitle = document.getElementById("job-title").value
-  const itemLocation = document.getElementById("job-location").value
-  const itemDescription = document.getElementById("editor-1").value
-    console.log(email)
-    console.log(itemTitle)
-    console.log(itemLocation)
-    console.log(itemDescription)
-  fetch('listings', {
-    method: 'post',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      'Email': email,
-      'ItemTitle': itemTitle,
-      'ItemLocation': itemLocation,
-      'ItemDescription' : itemDescription
+if (document.getElementById("postItemButton") ){
+  var postItemButton = document.getElementById("postItemButton");
+  postItemButton.addEventListener("click", function(){
+    alert("Your information has been submitted!")
+    // console.log("sending from the post item button to the database")
+    const email = document.getElementById("email").value
+    const itemTitle = document.getElementById("job-title").value
+    const itemLocation = document.getElementById("job-location").value
+    const itemDescription = document.getElementById("editor-1").value
+      console.log(email)
+      console.log(itemTitle)
+      console.log(itemLocation)
+      console.log(itemDescription)
+    fetch('listings', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        'Email': email,
+        'ItemTitle': itemTitle,
+        'ItemLocation': itemLocation,
+        'ItemDescription' : itemDescription
+      })
     })
+
   })
-
-})
-
-// searchItemButton.addEventListener("click", function(){
-//   alert("We are searching the database...")
-//   console.log("sending from the post item button to the database")
-//   const itemNameValue = document.getElementById("itemName").value
-//     console.log(itemNameValue)
+}
+// document.querySelector("h1").addEventListener("click", function(){
 //
-//   fetch('listings', {
-//     method: 'post',
-//     headers: {'Content-Type': 'application/json'},
-//     body: JSON.stringify({
-//       'Email': email,
-//     })
-//   })
+//   alert("We are searching the database...")
 //
 // })
+if (document.getElementById("searchItemButton")){
+  var searchItemButton = document.getElementById("searchItemButton")
+  searchItemButton.addEventListener("click", function(){
+    // alert("We are searching the database...")
+    const itemTitle = document.getElementById("listingsItemName").value
+    console.log(itemTitle)
+    window.location.href=`/searchItems?q=${itemTitle}`
+    // fetch("/")
+    // .then(response => response.json())
+    })
+  }
 
+// }
+
+
+// console.log("sending from the post item button to the database")
+// const itemNameValue = document.getElementById("itemName").value
+//   console.log(itemNameValue)
+//
+// fetch('listings', {
+//   method: 'post',
+//   headers: {'Content-Type': 'application/json'},
+//   body: JSON.stringify({
+//     'Email': email,
+//   })
+// })
 
 
 
