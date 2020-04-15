@@ -1,5 +1,8 @@
 module.exports = function (app, passport, db) {
 
+  const ObjectId = require('mongodb').ObjectID
+
+
   // normal routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -21,6 +24,27 @@ module.exports = function (app, passport, db) {
   app.get('/about', function (req, res) {
     res.render('about.ejs');
   })
+
+  // This code is altered from Socket.io's chat box tutorial
+  app.get('/chat', function (req, res) {
+    const id = req.query.id
+    console.log("chat job id:", id)
+
+    db.collection('Listings').findOne({
+      _id: ObjectId(id)
+    },(err, result) => {  //Find all posts then turn to array
+    //   if (err) return console.log(err)
+    console.log("Chat Find One Listing",result)
+      // res.render('job-listings.ejs',{
+      //   Listing: result
+      // })
+      res.render('chat.ejs', {
+        Listing: result,
+        email: req.user.local.email
+      });
+    })
+  });
+
 
   app.get('/job-listings', function (req, res) {
     db.collection('Listings').find().toArray((err, result) => {  //Find all posts then turn to array
@@ -46,6 +70,9 @@ module.exports = function (app, passport, db) {
 // app.get("job-listings", function (req, res, next){
 //   db.collection('Listings').find().toArray((err, result) => {
 // })
+
+//This code is altered from Lokendra-rawat on Github- Thank You!
+//https://github.com/Lokendra-rawat/NodeJs-shopping-cart/blob/master/routes/xhr.js
   app.get('/searchItems', function (req, res) {
     // var q = req.body.q
     // var q = "Masks"
@@ -116,7 +143,22 @@ module.exports = function (app, passport, db) {
 
 
   app.get('/job-single', function (req, res) {
-    res.render('job-single.ejs');
+    const id = req.query.id
+    console.log("job id:", id)
+
+    db.collection('Listings').findOne({
+      _id: ObjectId(id)
+    },(err, result) => {  //Find all posts then turn to array
+    //   if (err) return console.log(err)
+    console.log("Find One Listing",result)
+      // res.render('job-listings.ejs',{
+      //   Listing: result
+      // })
+      res.render('job-single.ejs', {
+        Listing: result
+      });
+    })
+    //1. get id out of request
   })
 
   app.get('/services', function (req, res) {

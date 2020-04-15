@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<body>
+
+
+
+<h1>Hello</h1>
+
+
+
+
+
+
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<!-- this code is altered from socket.io's chat box tutorial -->
+<script>var socket = io();  socket.emit('chat message', //this jut runs when the page loads- we want this to run when you click on a button
+JSON.stringify( {from: "<%=email%>", message:"Hi I'm interested in the <%=Listing.itemTitle %>",
+to: "<%=Listing.email %>" }));
+socket.on('chat message', function(msg){
+      console.log(msg) //create lis and put them on the screen
+    });
+</script>
+
+</html>

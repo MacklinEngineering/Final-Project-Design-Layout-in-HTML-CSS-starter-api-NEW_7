@@ -4,6 +4,7 @@
 // get all the tools we need
 var express  = require('express');
 var app      = express();
+var http = require('http');
 var port     = process.env.PORT || 1000;
 const MongoClient = require('mongodb').MongoClient
 var mongoose = require('mongoose');
@@ -36,7 +37,7 @@ mongoose.connect(configDB.url, (err, database) => {
     //     require('./app/routes.js')(app, passport, db);
     // });
 //});
- 
+
 require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
@@ -58,10 +59,26 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
+// io.on('connection', (socket) => {
+//   console.log('a user connected');
+// });
 // routes ======================================================================
 //require('./app/routes.js')(app, passport, db); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-app.listen(port);
+// app.listen(port);
+var server = http.createServer(app);
+server.listen(port);
+var io = require('socket.io')(server);
+/* setup socket.io */
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+     io.emit('chat message', msg);
+  });
+});
 console.log('The magic happens on port ' + port);
