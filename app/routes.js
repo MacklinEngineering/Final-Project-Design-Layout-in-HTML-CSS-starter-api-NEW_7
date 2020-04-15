@@ -23,8 +23,46 @@ module.exports = function (app, passport, db) {
   })
 
   app.get('/job-listings', function (req, res) {
-    res.render('job-listings.ejs');
-  })
+    // db.collection('Listings').find().toArray((err, result) => {  //Find all posts then turn to array
+    //   if (err) return console.log(err)
+      res.render('job-listings.ejs',
+      {items: [{
+          title: "Masks",
+          city: "Boston",
+          quantity: "300",
+        }]}
+      // {
+      //   itemTitle: req.body.ItemTitle,
+      //   itemlocation: req.body.ItemLocation,
+      //   Listings: result
+      // }
+    )
+    // })
+
+  //   res.render('job-listings.ejs', {items: [{
+  //     title: "Masks",
+  //     city: "Boston",
+  //     quantity: "300",
+  //   },{
+  //     title: "Hand Santizer",
+  //     city: "Roxbury",
+  //     quantity: "100",
+  //   }]
+  // })
+
+      })
+    // })
+  // })
+  // // FEED PAGE =========================
+  // app.get('/feed', function(req, res) {
+  //     db.collection('posts').find().toArray((err, result) => {  //Find all posts then turn to array
+  //       if (err) return console.log(err)
+  //       res.render('feed.ejs', {   //render /feed
+  //         user : req.user,
+  //         posts: result
+  //       })
+  //     })
+  // });
 
   app.get('/job-single', function (req, res) {
     res.render('job-single.ejs');
@@ -53,6 +91,8 @@ module.exports = function (app, passport, db) {
   //   res.render('job-listings.ejs')
   // })
 
+// app.get("profile")
+
 
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
@@ -74,14 +114,17 @@ module.exports = function (app, passport, db) {
   // message board routes ===============================================================
 
   app.post('/listings', (req, res) => {
-    
-    db.collection('Listings').save({ email: req.body.Email, 
-      itemTitle: req.body.ItemTitle, itemlocation: req.body.ItemLocation, itemdescription: req.body.ItemDescription}, (err, result) => { 
+    db.collection('Listings').save({ email: req.body.Email,
+      itemTitle: req.body.ItemTitle, itemlocation: req.body.ItemLocation, itemdescription: req.body.ItemDescription}, (err, result) => {
           if (err) return res.send(err)
           res.send(result)
     })
 
   })
+
+
+
+  // app.post("/")
 
   // db.collection('messages').save({ name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown: 0 }, (err, result) => {
     //   if (err) return console.log(err)
@@ -190,4 +233,3 @@ function isLoggedIn(req, res, next) {
 
   res.redirect('/');
 }
-
