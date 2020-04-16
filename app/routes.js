@@ -148,17 +148,14 @@ module.exports = function (app, passport, db) {
 
     db.collection('Listings').findOne({
       _id: ObjectId(id)
-    },(err, result) => {  //Find all posts then turn to array
-    //   if (err) return console.log(err)
-    console.log("Find One Listing",result)
-      // res.render('job-listings.ejs',{
-      //   Listing: result
-      // })
-      res.render('job-single.ejs', {
+    },
+    (err, result) => {  //Find all posts then turn to array
+    console.log("Find One New Listing",result)
+
+    res.render('job-single.ejs', {
         Listing: result
       });
     })
-    //1. get id out of request
   })
 
   app.get('/services', function (req, res) {
@@ -207,8 +204,9 @@ module.exports = function (app, passport, db) {
   // message board routes ===============================================================
 
   app.post('/listings', (req, res) => {
-    db.collection('Listings').save({ email: req.body.Email,
-      itemTitle: req.body.ItemTitle, itemlocation: req.body.ItemLocation, itemdescription: req.body.ItemDescription}, (err, result) => {
+    console.log(req.body)
+    db.collection('Listings').save({email: req.body.Email,
+      itemTitle: req.body.ItemTitle, itemlocation: req.body.ItemLocation, itemdescription: req.body.ItemDescription, Date: req.body.Date}, (err, result) => {
           if (err) return res.send(err)
           res.send(result)
     })

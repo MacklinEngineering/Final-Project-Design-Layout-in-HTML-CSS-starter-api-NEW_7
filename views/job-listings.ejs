@@ -57,7 +57,7 @@
                   <a href="/job-listings" class="active">Item Listings</a>
                   <ul class="dropdown">
                     <li><a href="/item-single">Item Single</a></li>
-                    <li><a href="/post-job" class="active">Post a Item</a></li>
+                    <li><a href="/post-job" class="active">PostAn Item</a></li>
                   </ul>
                 </li>
                 <li class="has-children">
@@ -72,14 +72,14 @@
                 </li>
 
                 <li><a href="contact">Contact</a></li>
-                <li class="d-lg-none"><a href="/post-job"><span class="mr-2">+</span> Post a Item</a></li>
+                <li class="d-lg-none"><a href="/post-job"><span class="mr-2">+</span> Post An Item</a></li>
                 <li class="d-lg-none"><a href="/login">Log In</a></li>
               </ul>
             </nav>
 
             <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
               <div class="ml-auto">
-                <a href="/post-job" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Item</a>
+                <a href="/post-job" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post An Item</a>
                 <a href="/login" class="btn btn-primary border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-lock_outline"></span>Log In</a>
               </div>
               <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
@@ -151,7 +151,7 @@
                 <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
                   <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
                     <h2> <%= Listings[i].itemTitle %> </h2>
-                    <strong><%= Listings[i].itemlocation %> </strong> Description: <strong><%= Listings[i].itemdescription %></strong>
+                    <strong><%= Listings[i].itemlocation %> </strong> Posted On: <strong><%=Listings[i].Date%></strong>
 
 
                     <!-- </div>
@@ -160,9 +160,9 @@
                   </div>
 
                 </div>
-                <div class="col-6">
+                <!-- <div class="col-6">
                   <a href="#" class="btn btn-block btn-primary btn-md">Claim Item</a>
-                </div>
+                </div> -->
             </li>
             <% } %>
 
